@@ -1,0 +1,14 @@
+#cloud-config
+runcmd:
+- sudo iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+- sudo iptables -A INPUT -p tcp --dport 22 -s 104.131.3.60 -j ACCEPT
+- sudo iptables -A INPUT -p tcp --dport 922 -s 104.131.3.60 -j ACCEPT
+- sudo iptables -I INPUT 1 -i lo -j ACCEPT
+- sed -i -e '/^Port/s/^.*$/Port 922/' /etc/ssh/sshd_config
+- sed -i -e '/^PermitRootLogin/s/^.*$/PermitRootLogin no/' /etc/ssh/sshd_config
+- sudo iptables -A INPUT -j DROP
+- sudo apt-get update && sudo apt-get --assume-yes upgrade
+- sudo apt-get --assume-yes install iptables-persistent
+- sudo service netfilter-persistent start
+- sudo invoke-rc.d iptables-persistent save
+- iptables-save > ~/iptables-rules/ruleset-v4
